@@ -6,7 +6,7 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://localhost:3408/',
+      target: 'https://server-5k5n.onrender.com/',
       changeOrigin: true,
       pathRewrite: {
         '^/api': ''
