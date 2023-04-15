@@ -1,19 +1,21 @@
 import axios from 'axios'
 const http = axios.create({
-  // baseURL: 'http://localhost:3408/',
-  baseURL: '/api',
+  // baseURL: 'http://localhost:3408',
+  baseURL: 'https://server-5k5n.onrender.com',
+  // baseURL: '/api',
   // baseURL: '/',
   headers: {
-    // 'Content-Type': 'application/json;charset=UTF-8',
+    'Content-Type': 'application/json;charset=UTF-8',
+    // 'Access-Control-Allow-Origin': '*',
     /* 设定jwt请求头 */
     'authorization': (localStorage.getItem('token') == null ? '' : localStorage.getItem('token'))
     // 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
   },
   data: {},
-  crossdomain: true,/* 跨域设定 */
+  // crossdomain: true,/* 跨域设定 */
   timeout: 5000,
   responseType: 'json',
-  withCredentials: true,//表示跨域请求时是否需要使用凭证cookie
+  // withCredentials: true,//表示跨域请求时是否需要使用凭证cookie
 })
 
 // 添加一个请求拦截器
@@ -21,7 +23,7 @@ http.interceptors.request.use((config) => {
   let localtoken = localStorage.getItem('token');
   if (config.headers.authorization != localtoken) {
     /* 如果请求的token和本地存储的token不一致，重置请求的token值 */
-    config.headers.Authorization = localtoken;
+    config.headers.authorization = localtoken;
   }
   return config
 }, (error) => {
